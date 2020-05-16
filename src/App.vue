@@ -1,16 +1,24 @@
 <template>
-  <div id="app" class="container w-100 h-100">
-    <todo></todo>
+  <div id="app" class="container w-100 h-100 bg-dark">
+    <todo v-if="initalized" class="no-gutters" />
+    <welcome v-if="!initalized" />
   </div>
 </template>
 
 <script>
 import Todo from './components/Todo';
+import Welcome from './components/Welcome';
 
 export default {
   name: 'App',
   components: {
-    Todo
+    Todo,
+    Welcome
+  },
+  data: function () {
+    return {
+      initalized: true
+    };
   }
 };
 </script>
