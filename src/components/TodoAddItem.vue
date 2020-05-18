@@ -1,18 +1,20 @@
 <template>
     <div class="row">
         <div class="col-12 mb-3 py-2 rounded-bottom bg-dark">
-            <div class="form-inline">
+            <div class="input-group">
                 <input 
-                    v-model="newItemTitle"
-                    class="form-control col-lg-11"
+                    class="form-control rounded width100    "
                     type="text" 
                     placeholder="What do you want to do?"
+                    v-model="newItemTitle"
                 />
-                <button 
-                    class="btn btn-light ml-2"
-                    v-on:click="addItem ()"
-                    :disabled="newItemTitle.length < 3"
-                >Add</button>
+                <span class="input-group-btn">
+                    <button 
+                        class="btn btn-light ml-1"
+                        v-on:click="addItem ()"
+                        :disabled="newItemTitle.length < 3"
+                    >Add</button>
+                </span>
             </div>
         </div>
     </div>
