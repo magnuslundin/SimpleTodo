@@ -15,6 +15,7 @@
 <script>
 import TodoListItem from './TodoListItem';
 import TodoAddItem from './TodoAddItem';
+import moment from 'moment';
 
 export default {
     components: {
@@ -23,17 +24,16 @@ export default {
     },
     methods: {
         addTodoItem: function (newItemTitle) {
-            var date = new Date ();
             this.todoItems.push({
                 id: ++this.itemIdCounter,
                 title: newItemTitle,
                 description: '',
                 completed: false,
-                added: date.getFullYear()+'-'+date.getMonth()+'-'+date.getDay()
+                added: moment().format('YYYY-MM-DD')
             });
         },
         removeTodoItem: function (id) {
-            this.todoItems = this.todoItems.filter (item => item.id !== id);
+            this.todoItems = this.todoItems.filter(item => item.id !== id);
         }
     },
     data: function () {
