@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container w-100 h-100 bg-dark">
+  <div id="app" class="container w-100 h-100">
     <todo v-if="initalized" class="no-gutters" />
     <welcome v-if="!initalized" />
   </div>
@@ -28,8 +28,7 @@ export default {
     width: 100%;
     height: 100%;
   }
-  body {
+  html body {
     background-color: #333;
-    color: #fff;
   }
 </style>
