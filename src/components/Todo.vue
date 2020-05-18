@@ -6,6 +6,7 @@
         <todo-list-item
             v-for="item in todoItems"
             v-on:deleteItem="removeTodoItem($event)"
+            v-on:changed="$emit('itemChanged', item.id)"
             :key="item.id"
             :todoItem="item"
         />
@@ -18,6 +19,9 @@ import TodoAddItem from './TodoAddItem';
 import moment from 'moment';
 
 export default {
+    props: {
+        todoItems: Array
+    },
     components: {
         TodoListItem,
         TodoAddItem
@@ -33,28 +37,15 @@ export default {
             });
         },
         removeTodoItem: function (id) {
-            this.todoItems = this.todoItems.filter(item => item.id !== id);
+            this.$emit('removeTodoItem', id);
         }
     },
     data: function () {
+        var itemIdCounterStart = (this.todoItems.length>0) ?
+                                                        Math.max (...this.todoItems.map (item => item.id)) :
+                                                        0;
         return {
-            itemIdCounter: 2,
-            todoItems: [
-                {
-                    id: 1,
-                    title: 'This is my first todo',
-                    description: 'This describes my todo',
-                    completed: false,
-                    added: '2020-05-16'
-                },
-                {
-                    id: 2,
-                    title: 'Pick out the trash',
-                    description: '',
-                    completed: false,
-                    added: '2020-05-16'
-                }
-            ]
+            itemIdCounter: itemIdCounterStart
         }
     }
 }

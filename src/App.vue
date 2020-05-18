@@ -1,7 +1,15 @@
 <template>
   <div id="app" class="container w-100 h-100">
-    <todo v-if="initalized" class="no-gutters" />
-    <welcome v-if="!initalized" />
+    <todo 
+      v-if="initialized"
+      v-bind:todoItems="todoItems"
+      v-on:removeTodoItem="removeTodoItem($event)"
+      v-on:itemChanged="storeItemData()"
+    />
+    <welcome 
+      v-if="!initialized" 
+      v-on:accepted="initialize()"
+    />
   </div>
 </template>
 
@@ -15,9 +23,38 @@ export default {
     Todo,
     Welcome
   },
-  data: function () {
+  mounted () {
+    if (!localStorage.initialized) {
+      return;
+    }
+    this.initialized = localStorage.initialized;
+    this.loadItemData ();
+  },
+  watch: {
+    todoItems () {
+      this.storeItemData ();
+    }
+  },
+  methods: {
+    initialize () {
+      this.todoItems = []
+      localStorage.todoItems = JSON.stringify(this.todoItems);
+      localStorage.initialized = this.initialized = 1;
+    },
+    removeTodoItem (id) {
+      this.todoItems = this.todoItems.filter(item => item.id !== id);
+    },
+    storeItemData () {
+      localStorage.todoItems = JSON.stringify(this.todoItems);
+    },
+    loadItemData () {
+      this.todoItems = JSON.parse(localStorage.todoItems);
+    }
+  },
+  data () {
     return {
-      initalized: true
+      initialized: 0,
+      todoItems: []
     };
   }
 };
