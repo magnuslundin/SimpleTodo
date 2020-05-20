@@ -4,7 +4,7 @@
       v-if="initialized"
       v-bind:todoItems="todoItems"
       v-on:removeTodoItem="removeTodoItem($event)"
-      v-on:itemChanged="storeItemData()"
+      v-on:itemChanged="storeTodoItemData()"
     />
     <welcome 
       v-if="!initialized" 
@@ -28,11 +28,11 @@ export default {
       return;
     }
     this.initialized = localStorage.initialized;
-    this.loadItemData ();
+    this.loadTodoItemData ();
   },
   watch: {
     todoItems () {
-      this.storeItemData ();
+      this.storeTodoItemData ();
     }
   },
   methods: {
@@ -44,11 +44,13 @@ export default {
     removeTodoItem (id) {
       this.todoItems = this.todoItems.filter(item => item.id !== id);
     },
-    storeItemData () {
+    storeTodoItemData () {
       localStorage.todoItems = JSON.stringify(this.todoItems);
     },
-    loadItemData () {
+    loadTodoItemData () {
       this.todoItems = JSON.parse(localStorage.todoItems);
+      // True/false is interpreted as strings by JSON.parse
+      this.todoItems.map (item => item.completed = (item.completed === true) ? true : false);
     }
   },
   data () {
