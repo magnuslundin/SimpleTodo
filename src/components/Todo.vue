@@ -19,12 +19,13 @@ import TodoAddItem from './TodoAddItem';
 import moment from 'moment';
 
 export default {
-    props: {
-        todoItems: Array
-    },
+    name: 'Todo',
     components: {
         TodoListItem,
         TodoAddItem
+    },
+    props: {
+        todoItems: Array
     },
     methods: {
         addTodoItem: function (newItemTitle) {
