@@ -2,53 +2,77 @@
     <div class="row">
         <div 
             class="col-12 bg-light rounded shadow py-2 mt-2 todo-list-item"
-            v-on:click="showExtendedDetails=!showExtendedDetails"
         >
-            <div class="form-inline">
-                <div class="ml-2">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <input-checkbox
+                        v-model="todoItem.completed"
+                        :size="1.8"
+                        v-on:input="onChange ()"
+                        v-on:click="showExtendedDetails=false"
+                    >
+                    </input-checkbox>
+                </span>
+                <div class="input-group-addon col ">
                     <input 
-                        class="form-control"
-                        type="checkbox" 
-                        v-model="todoItem.completed"  
-                        v-on:change="$emit('changed')"
-                    />
-                </div>
-                <div class="ml-2">
-                    <input 
-                        class="form-control col-md-12" 
+                        class="form-control" 
                         type="text" 
-                        v-show="false" 
                         v-model="todoItem.title"
-                        v-on:change="$emit('changed')"
+                        v-on:change="onChange ()"
+                        :class="{'shadow-none bg-transparent border-0': !showExtendedDetails}"
+                        :readonly="!showExtendedDetails"
                     />
-                    <span
-                        :class="{ completed: todoItem.completed }"
-                    >{{ todoItem.title }}</span>
+                    <div class="mt-3" v-if="showExtendedDetails">
+                        <div class="col px-0">
+                            <textarea 
+                                class="form-control"
+                                v-model="todoItem.description"
+                                v-on:change="onChange ()"
+                                placeholder="Describe in detail what you are about to do"
+                            ></textarea>
+                        </div>
+                        <div class="col px-0 mt-3">
+                            <span class="small text-muted"><strong>Created</strong> {{ this.todoItem.added }}</span>
+                        </div>
+                    </div>
                 </div>
-                <div 
-                    class="ml-auto mr-2"
-                    v-if="todoItem.completed"
-                >
+                <!-- Edit button -->
+                <span class="input-group-button ml-2" v-if="!todoItem.completed">
+                    <button 
+                        class="btn btn-default shadow-none"
+                        type="button" 
+                        aria-label="Left Align"
+                        v-on:click="showExtendedDetails=!showExtendedDetails"
+                    >
+                        <b-icon-pencil-square></b-icon-pencil-square>
+                    </button>
+                </span>
+                <!-- Delete button -->
+                <span class="input-group-button" v-if="todoItem.completed">
                     <button 
                         class="btn btn-danger"
                         v-on:click="$emit('deleteItem', todoItem.id)"
                     >Delete</button>
-                </div>
-            </div>
-            <div 
-                class="col-12"
-                v-if="showExtendedDetails"
-            >
-                <div>{{ this.todoItem.description }}</div>
-                <div>Added: {{ this.todoItem.added }}</div>
+                </span>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import InputCheckbox from './InputCheckbox';
+
 export default {
     name: 'TodoListItem',
+    components: {
+        InputCheckbox
+    },
+    methods: {
+        onChange () {
+            console.log ('Changed');
+            this.$emit('changed');
+        }
+    },
     props: ['todoItem'],
     data() {
         return {
