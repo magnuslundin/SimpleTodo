@@ -13,7 +13,9 @@
                         class="btn btn-light ml-1"
                         v-on:click="addItem ()"
                         :disabled="newItemTitle.length < 3"
-                    >Add</button>
+                    >
+                        <b-icon-play-fill></b-icon-play-fill>
+                    </button>
                 </span>
             </div>
         </div>
