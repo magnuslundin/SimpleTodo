@@ -19,8 +19,8 @@
                         type="text" 
                         v-model="todoItem.title"
                         v-on:change="onChange ()"
-                        :class="{'shadow-none bg-transparent border-0': !showExtendedDetails}"
-                        :readonly="!showExtendedDetails"
+                        :class="{'shadow-none bg-transparent border-0': !editMode}"
+                        :readonly="!editMode"
                     />
                     <div class="mt-3" v-if="showExtendedDetails">
                         <div class="col px-0">
@@ -28,21 +28,33 @@
                                 class="form-control"
                                 v-model="todoItem.description"
                                 v-on:change="onChange ()"
+                                :class="{'shadow-none bg-transparent border-0': !editMode}"
+                                :readonly="!editMode"
                                 placeholder="Describe in detail what you are about to do"
                             ></textarea>
                         </div>
+
                         <div class="col px-0 mt-3">
                             <span class="small text-muted"><strong>Created</strong> {{ this.todoItem.added }}</span>
                         </div>
                     </div>
                 </div>
-                <!-- Edit button -->
-                <span class="input-group-button ml-2" v-if="!todoItem.completed">
+                <!-- Expand button + Edit button -->
+                <span class="input-group-button ml-2 d-flex flex-column" v-if="!todoItem.completed">
                     <button 
                         class="btn btn-default shadow-none"
                         type="button" 
                         aria-label="Left Align"
-                        v-on:click="showExtendedDetails=!showExtendedDetails"
+                        v-on:click="showExtendedDetails=!showExtendedDetails; editMode=false;"
+                    >
+                        <b-icon-chevron-down v-show="!showExtendedDetails"></b-icon-chevron-down>
+                        <b-icon-chevron-up v-show="showExtendedDetails"></b-icon-chevron-up>
+                    </button>
+                    <button 
+                        class="btn btn-dark mt-auto"
+                        type="button" 
+                        v-show="showExtendedDetails && !editMode"
+                        v-on:click="editMode=true"
                     >
                         <b-icon-pencil-square></b-icon-pencil-square>
                     </button>
@@ -78,7 +90,8 @@ export default {
     props: ['todoItem'],
     data() {
         return {
-            showExtendedDetails: false
+            showExtendedDetails: false,
+            editMode: false
         }
     }
 }
