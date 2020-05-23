@@ -52,7 +52,9 @@
                     <button 
                         class="btn btn-danger"
                         v-on:click="$emit('deleteItem', todoItem.id)"
-                    >Delete</button>
+                    >
+                        <b-icon-trash></b-icon-trash>
+                    </button>
                 </span>
             </div>
         </div>
