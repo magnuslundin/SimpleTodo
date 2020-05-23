@@ -15,7 +15,7 @@
                 </span>
                 <div class="input-group-addon col ">
                     <input 
-                        class="form-control" 
+                        class="form-control font-weight-bold" 
                         type="text" 
                         v-model="todoItem.title"
                         v-on:change="onChange ()"
