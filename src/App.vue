@@ -1,12 +1,11 @@
 <template>
   <div id="app" class="container w-100 h-100">
-    <navigation />
-    <todo 
+    <navigation 
       v-if="initialized"
-      v-bind:todoItems="todoItems"
-      v-on:removeTodoItem="removeTodoItem($event)"
-      v-on:itemChanged="storeTodoItemData()"
     />
+    <router-view
+      v-if="initialized"
+    ></router-view>
     <welcome 
       v-if="!initialized" 
       v-on:accepted="initialize()"
@@ -16,50 +15,29 @@
 
 <script>
 import Navigation from './components/Navigation';
-import Todo from './components/Todo';
 import Welcome from './components/Welcome';
 
 export default {
   name: 'App',
   components: {
     Navigation,
-    Todo,
     Welcome
   },
   mounted () {
     if (!localStorage.initialized) {
-      return;
+        return;
     }
     this.initialized = localStorage.initialized;
-    this.loadTodoItemData ();
-  },
-  watch: {
-    todoItems () {
-      this.storeTodoItemData ();
-    }
   },
   methods: {
     initialize () {
-      this.todoItems = []
-      localStorage.todoItems = JSON.stringify(this.todoItems);
       localStorage.initialized = this.initialized = 1;
-    },
-    removeTodoItem (id) {
-      this.todoItems = this.todoItems.filter(item => item.id !== id);
-    },
-    storeTodoItemData () {
-      localStorage.todoItems = JSON.stringify(this.todoItems);
-    },
-    loadTodoItemData () {
-      this.todoItems = JSON.parse(localStorage.todoItems);
-      // True/false is interpreted as strings by JSON.parse
-      this.todoItems.map (item => item.completed = (item.completed === true) ? true : false);
+      localStorage.todoItems = [];
     }
   },
   data () {
     return {
       initialized: 0,
-      todoItems: []
     };
   }
 };

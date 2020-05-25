@@ -24,29 +24,56 @@ export default {
         TodoListItem,
         TodoAddItem
     },
-    props: {
-        todoItems: Array
+    mounted () {
+        if (!localStorage.initialized) {
+            return;
+        }
+        this.loadTodoItemData ();
+    },
+    watch: {
+        todoItems () {
+            this.storeTodoItemData ();
+        }
     },
     methods: {
         addTodoItem: function (newItemTitle) {
             this.todoItems.push({
-                id: ++this.itemIdCounter,
+                id: this.itemIdCounter+1,
                 title: newItemTitle,
                 description: '',
                 completed: false,
                 added: moment().format('YYYY-MM-DD')
             });
         },
-        removeTodoItem: function (id) {
-            this.$emit('removeTodoItem', id);
+        removeTodoItem (id) {
+            this.todoItems = this.todoItems.filter(item => item.id !== id);
+        },
+        storeTodoItemData () {
+            localStorage.todoItems = JSON.stringify(this.todoItems);
+        },
+        loadTodoItemData () {
+            if (localStorage.todoItems.length===0) {
+                this.todoItems = [];
+                return;
+            }
+            this.todoItems = JSON.parse(localStorage.todoItems);
+            // True/false is interpreted as strings by JSON.parse
+            this.todoItems.map (item => item.completed = (item.completed === true) ? true : false);
+        }
+    },
+    computed: {
+        itemIdCounter: function () {
+            if (!this.todoItems) {
+                return 0;
+            }
+            return (this.todoItems.length>0) ?
+                                            Math.max (...this.todoItems.map (item => item.id)) :
+                                            0;
         }
     },
     data: function () {
-        var itemIdCounterStart = (this.todoItems.length>0) ?
-                                                        Math.max (...this.todoItems.map (item => item.id)) :
-                                                        0;
         return {
-            itemIdCounter: itemIdCounterStart
+            todoItems: []
         }
     }
 }
