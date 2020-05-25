@@ -19,6 +19,7 @@
                         type="text" 
                         v-model="todoItem.title"
                         v-on:change="onChange ()"
+                        v-on:click="editMode = true"
                         :class="{'shadow-none bg-transparent border-0': !editMode}"
                         :readonly="!editMode"
                     />
@@ -28,35 +29,37 @@
                                 class="form-control"
                                 v-model="todoItem.description"
                                 v-on:change="onChange ()"
+                                v-on:click="editMode = true"
                                 :class="{'shadow-none bg-transparent border-0': !editMode}"
                                 :readonly="!editMode"
                                 placeholder="Describe in detail what you are about to do"
                             ></textarea>
                         </div>
 
-                        <div class="col px-0 mt-3">
+                        <div class="col mt-3">
                             <span class="small text-muted"><strong>Created</strong> {{ this.todoItem.added }}</span>
                         </div>
                     </div>
                 </div>
-                <!-- Expand button + Edit button -->
+                <!-- Expand button + Save button -->
                 <span class="input-group-button ml-2 d-flex flex-column" v-if="!todoItem.completed">
                     <button 
                         class="btn btn-default shadow-none"
                         type="button" 
                         aria-label="Left Align"
                         v-on:click="showExtendedDetails=!showExtendedDetails; editMode=false;"
+                        v-show="!editMode"
                     >
                         <b-icon-chevron-down v-show="!showExtendedDetails"></b-icon-chevron-down>
                         <b-icon-chevron-up v-show="showExtendedDetails"></b-icon-chevron-up>
                     </button>
                     <button 
-                        class="btn btn-dark mt-auto"
+                        class="btn btn-dark"
                         type="button" 
-                        v-show="showExtendedDetails && !editMode"
-                        v-on:click="editMode=true"
+                        v-show="editMode"
+                        v-on:click="editMode=false"
                     >
-                        <b-icon-pencil-square></b-icon-pencil-square>
+                        <b-icon-check></b-icon-check>
                     </button>
                 </span>
                 <!-- Delete button -->
