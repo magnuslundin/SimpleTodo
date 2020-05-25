@@ -86,7 +86,6 @@ export default {
     },
     methods: {
         onChange () {
-            console.log ('Changed');
             this.$emit('changed');
         }
     },
