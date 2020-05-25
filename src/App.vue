@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="container w-100 h-100">
+    <navigation />
     <todo 
       v-if="initialized"
       v-bind:todoItems="todoItems"
@@ -14,12 +15,14 @@
 </template>
 
 <script>
+import Navigation from './components/Navigation';
 import Todo from './components/Todo';
 import Welcome from './components/Welcome';
 
 export default {
   name: 'App',
   components: {
+    Navigation,
     Todo,
     Welcome
   },
