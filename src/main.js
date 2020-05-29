@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
-import App from './App.vue';
-import Todo from './components/Todo';
-import Settings from './components/Settings';
+import App from '@/App.vue';
+import TodoPage from '@/pages/TodoPage';
+import Settings from '@/pages/SettingsPage';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -20,7 +20,7 @@ const router =  new VueRouter({
     {
       path: '/',
       name: 'todo',
-      component: Todo
+      component: TodoPage
     },
     {
       path: '/settings',

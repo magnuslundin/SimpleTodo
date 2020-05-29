@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import Navigation from './components/Navigation';
-import Welcome from './components/Welcome';
+import Navigation from '@/components/AppNavigation';
+import Welcome from '@/components/FirstTimeUsageMessage';
 
 export default {
   name: 'App',

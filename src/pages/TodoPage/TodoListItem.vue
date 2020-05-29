@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import InputCheckbox from './InputCheckbox';
+import InputCheckbox from '@/components/InputCheckbox';
 
 export default {
     name: 'TodoListItem',
