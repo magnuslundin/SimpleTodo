@@ -8,19 +8,22 @@
                     <input-checkbox
                         v-model="todoItem.completed"
                         :size="1.8"
-                        v-on:input="onChange ()"
-                        v-on:click="showExtendedDetails=false"
+                        v-on:input="itemCompletedToggle()"
                     >
                     </input-checkbox>
                 </span>
                 <div class="input-group-addon col ">
                     <input 
-                        class="form-control font-weight-bold" 
+                        class="form-control" 
                         type="text" 
                         v-model="todoItem.title"
                         v-on:change="onChange ()"
                         v-on:click="editMode = true"
-                        :class="{'shadow-none bg-transparent border-0': !editMode}"
+                        :class="{
+                                'shadow-none bg-transparent border-0': !editMode,
+                                'font-weight-bold': !todoItem.completed,
+                                'font-italic': todoItem.completed
+                                }"
                         :readonly="!editMode"
                     />
                     <div class="mt-3" v-if="showExtendedDetails">
@@ -87,6 +90,10 @@ export default {
     methods: {
         onChange () {
             this.$emit('changed');
+        },
+        itemCompletedToggle () {
+            this.$emit('completedToggle', this.todoItem.id);
+            this.onChange ();
         }
     },
     props: ['todoItem'],

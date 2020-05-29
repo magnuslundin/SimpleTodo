@@ -7,6 +7,7 @@
             v-for="item in todoItems"
             v-on:deleteItem="removeTodoItem($event)"
             v-on:changed="storeTodoItemData()"
+            v-on:completedToggle="reorderIdOnCompletedToggle ($event)"
             :key="item.id"
             :todoItem="item"
         />
@@ -59,6 +60,16 @@ export default {
             this.todoItems = JSON.parse(localStorage.todoItems);
             // True/false is interpreted as strings by JSON.parse
             this.todoItems.map (item => item.completed = (item.completed === true) ? true : false);
+        },
+        reorderIdOnCompletedToggle (id) {
+            const changedItem = this.todoItems.find(item => item.id===id);
+            
+            this.todoItems = this.todoItems.filter(item => item.id!==changedItem.id)
+            if (changedItem.completed) {
+                this.todoItems.push(changedItem);
+            } else {
+                this.todoItems.unshift(changedItem);
+            }
         }
     },
     computed: {
