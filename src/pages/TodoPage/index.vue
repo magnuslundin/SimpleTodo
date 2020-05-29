@@ -6,7 +6,7 @@
         <todo-list-item
             v-for="item in todoItems"
             v-on:deleteItem="removeTodoItem($event)"
-            v-on:changed="$emit('itemChanged', item.id)"
+            v-on:changed="storeTodoItemData()"
             :key="item.id"
             :todoItem="item"
         />
