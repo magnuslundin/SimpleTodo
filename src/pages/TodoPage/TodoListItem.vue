@@ -20,7 +20,7 @@
                         v-on:change="onChange ()"
                         v-on:click="editMode = true"
                         :class="{
-                                'shadow-none bg-transparent border-0': !editMode,
+                                'shadow-none bg-transparent border-0 w-auto pointer-on-hover': !editMode,
                                 'font-weight-bold': !todoItem.completed,
                                 'font-italic': todoItem.completed
                                 }"
@@ -110,7 +110,7 @@ export default {
     span.completed {
         text-decoration: line-through;
     }
-    div.todo-list-item {
+    .pointer-on-hover:hover {
         cursor:pointer;
     }
 </style>

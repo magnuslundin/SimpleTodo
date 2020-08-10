@@ -50,6 +50,9 @@ export default {
         width: 1.3em;
         height: 1.3em;
     }
+    .input-checkbox label .checkbox-square:hover {
+        cursor:pointer;
+    }
 
     .input-checkbox label input[type="checkbox"] {
         display: none;
