@@ -1,21 +1,21 @@
 <template>
   <div id="app" class="container w-100 h-100">
-    <navigation 
+    <navigation
       v-if="initialized"
     />
     <router-view
       v-if="initialized"
     ></router-view>
-    <welcome 
-      v-if="!initialized" 
+    <welcome
+      v-if="!initialized"
       v-on:accepted="initialize()"
     />
   </div>
 </template>
 
 <script>
-import Navigation from '@/components/AppNavigation';
-import Welcome from '@/components/FirstTimeUsageMessage';
+import Navigation from '@/components/AppNavigation'
+import Welcome from '@/components/FirstTimeUsageMessage'
 
 export default {
   name: 'App',
@@ -25,22 +25,22 @@ export default {
   },
   mounted () {
     if (!localStorage.initialized) {
-        return;
+      return
     }
-    this.initialized = localStorage.initialized;
+    this.initialized = localStorage.initialized
   },
   methods: {
     initialize () {
-      localStorage.initialized = this.initialized = 1;
-      localStorage.todoItems = [];
+      localStorage.initialized = this.initialized = 1
+      localStorage.todoItems = []
     }
   },
   data () {
     return {
-      initialized: 0,
-    };
+      initialized: 0
+    }
   }
-};
+}
 </script>
 
 <style>
